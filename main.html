@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>灵工保｜灵活就业者一站式社保服务平台</title>
+  <title>灵工保｜首页</title>
   <meta
     name="description"
-    content="灵工保是一款面向灵活就业群体的一站式社保服务平台，聚焦保障方案、政策直通车与数智化服务闭环。"
+    content="灵工保首页，提供社保缴纳、断保提醒、智能测算和北京市政策解读服务。"
   />
   <link rel="stylesheet" href="./style.css" />
 </head>
@@ -19,288 +19,221 @@
           <span>灵工保</span>
         </a>
         <nav class="nav-links">
-          <a href="#home">产品首页</a>
-          <a href="#plans">保障方案</a>
-          <a href="#policy">政策直通车</a>
-          <a class="btn btn-nav" href="./index.html">返回登录</a>
+          <a href="#home">首页</a>
+          <a href="#payment">社保缴纳</a>
+          <a href="#calculator">智能测算</a>
+          <a href="#profile">个人中心</a>
         </nav>
       </div>
     </header>
 
     <main class="site-main">
-      <section class="hero section" id="home">
-        <div class="hero-grid">
-          <div>
-            <span class="pill">灵活就业社保服务创业项目</span>
-            <h1>让灵活就业者像正式员工一样，享受更安心的保障服务。</h1>
+      <section class="hero hero-simple section" id="home">
+        <div class="hero-grid hero-grid-simple">
+          <div class="hero-copy">
+            <span class="pill">灵活就业社保助手</span>
+            <h1>为灵活就业者提供有温度的保障</h1>
             <p>
-              灵工保聚合参保咨询、缴费测算、政策推送与风险提醒，
-              用更具商业化的产品形态，帮助平台骑手、自由职业者、个体经营者完成一站式社保服务管理。
+              灵工保把社保缴纳、断保提醒、智能测算和政策解读放到一个页面，
+              让您更轻松地管理每一份保障。
             </p>
             <div class="hero-actions">
-              <a class="btn" href="#plans">查看保障方案</a>
-              <a class="btn btn-secondary" href="#policy">进入政策直通车</a>
+              <a class="btn btn-accent" href="#calculator">立即开始测评</a>
             </div>
           </div>
 
-          <div class="hero-panel">
-            <div class="panel-card">
-              <div class="panel-top">
-                <span class="panel-badge">实时保障驾驶舱</span>
-                <strong>个人参保状态稳定</strong>
+          <div class="panel-card hero-status-card">
+            <div class="panel-top">
+              <span class="panel-badge">平台实时动态</span>
+              <strong>您的社保保障状态</strong>
+            </div>
+            <div class="metrics metrics-stack">
+              <div class="metric-card">
+                <span class="metric-value">本月待缴</span>
+                <span class="metric-label">建议在 5 日前完成缴费</span>
               </div>
-              <div class="metrics">
-                <div class="metric-card">
-                  <span class="metric-value">36</span>
-                  <span class="metric-label">累计保障月数</span>
-                </div>
-                <div class="metric-card">
-                  <span class="metric-value">98%</span>
-                  <span class="metric-label">缴费提醒触达率</span>
-                </div>
-                <div class="metric-card">
-                  <span class="metric-value">24h</span>
-                  <span class="metric-label">政策更新响应</span>
-                </div>
+              <div class="metric-card">
+                <span class="metric-value">提醒已开启</span>
+                <span class="metric-label">断保风险将提前通知您</span>
               </div>
-              <ul class="panel-list">
-                <li>智能识别参保风险并主动提醒</li>
-                <li>根据职业类型推荐最优缴费方案</li>
-                <li>对接政策信息形成政策直通闭环</li>
-              </ul>
+              <div class="metric-card">
+                <span class="metric-value">北京政策更新</span>
+                <span class="metric-label">最新办理信息可直接查看</span>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="section section-soft" id="pain">
+      <section class="section" id="services">
         <div class="section-header">
           <div>
-            <span class="section-eyebrow">商业化文案替换</span>
-            <h2>市场痛点分析</h2>
+            <span class="section-eyebrow">核心服务</span>
+            <h2>常用功能，一点就能开始</h2>
           </div>
-          <p>从真实灵活就业人群需求出发，重新定义“低门槛、高确定性”的社保服务体验。</p>
+          <p>把常用能力做成卡片，您可以直接进入缴费、提醒和政策解读流程。</p>
         </div>
-        <div class="card-grid card-grid-4">
-          <article class="info-card">
-            <span class="info-tag">痛点 01</span>
-            <h3>参保路径复杂</h3>
-            <p>不同地区规则差异明显，用户难以快速判断自己该如何参保、缴费与续保。</p>
+        <div class="card-grid card-grid-3 service-grid">
+          <article class="service-card">
+            <div class="service-icon">缴</div>
+            <h3>灵活缴费</h3>
+            <p>支持按周/按天灵活存入社保资金</p>
+            <a class="btn" href="#payment">去缴费</a>
           </article>
-          <article class="info-card">
-            <span class="info-tag">痛点 02</span>
-            <h3>风险提醒滞后</h3>
-            <p>断缴、漏缴、政策变化等信息获取成本高，用户往往在损失发生后才意识到问题。</p>
+          <article class="service-card">
+            <div class="service-icon">预</div>
+            <h3>断保预警</h3>
+            <p>智能监测社保状态，防止待遇中断</p>
+            <a class="btn btn-secondary" href="#payment">开启提醒</a>
           </article>
-          <article class="info-card">
-            <span class="info-tag">痛点 03</span>
-            <h3>服务缺乏陪伴感</h3>
-            <p>传统咨询服务单次触达多、持续运营少，难以形成长期信任与复购关系。</p>
-          </article>
-          <article class="info-card">
-            <span class="info-tag">痛点 04</span>
-            <h3>政策理解成本高</h3>
-            <p>用户需要自行筛选政策要点，缺少可落地、可执行、可跟进的解读服务。</p>
+          <article class="service-card">
+            <div class="service-icon">策</div>
+            <h3>政策直通车</h3>
+            <p>最新北京市社保政策一键解读</p>
+            <a class="btn btn-secondary" href="#policy">查看政策</a>
           </article>
         </div>
       </section>
 
-      <section class="section" id="plans">
+      <section class="section section-soft" id="payment">
         <div class="section-header">
           <div>
-            <span class="section-eyebrow">商业化导航升级</span>
-            <h2>保障方案</h2>
+            <span class="section-eyebrow">社保缴纳</span>
+            <h2>您的社保保障状态</h2>
           </div>
-          <p>围绕不同职业阶段和缴费能力，提供更具可理解性的分层保障组合。</p>
+          <p>缴费进度、提醒状态和政策变化集中展示，方便您快速处理本月任务。</p>
         </div>
-        <div class="card-grid card-grid-3">
-          <article class="plan-card">
-            <span class="plan-level">基础版</span>
-            <h3>安心入门保障</h3>
-            <p>适合刚进入灵活就业阶段的人群，聚焦参保开户、月度提醒与基础政策答疑。</p>
-            <ul>
-              <li>月度参保提醒</li>
-              <li>本地政策解读</li>
-              <li>社保办理清单</li>
-            </ul>
-            <a class="btn" href="#showcase">查看展示</a>
+        <div class="status-grid">
+          <article class="status-card">
+            <span class="status-label">当前进度</span>
+            <h3>本月缴费待完成</h3>
+            <p>已生成本周缴费提醒，完成后系统会自动更新您的社保状态。</p>
           </article>
-          <article class="plan-card plan-card-featured">
-            <span class="plan-level">旗舰版</span>
-            <h3>智能增值保障</h3>
-            <p>适合有稳定收入和保障升级诉求的用户，覆盖方案测算、风险预警与顾问式服务。</p>
-            <ul>
-              <li>个性化缴费测算</li>
-              <li>断缴风险预警</li>
-              <li>专属顾问陪伴</li>
-            </ul>
-            <a class="btn" href="#system">立即咨询</a>
+          <article class="status-card">
+            <span class="status-label">断保提醒</span>
+            <h3>距离提醒节点还有 3 天</h3>
+            <p>如果您本周未完成缴费，灵工保会通过站内提醒再次通知。</p>
           </article>
-          <article class="plan-card">
-            <span class="plan-level">企业合作版</span>
-            <h3>平台共建保障</h3>
-            <p>面向零工平台与创业团队，支持批量服务、规则统一与数据驾驶舱展示。</p>
-            <ul>
-              <li>企业用户后台</li>
-              <li>批量参保管理</li>
-              <li>服务数据看板</li>
-            </ul>
-            <a class="btn" href="#roadmap">查看规划</a>
+          <article class="status-card">
+            <span class="status-label">办理建议</span>
+            <h3>优先补齐本月金额</h3>
+            <p>建议先完成本月缴费，再查看北京本地最新补贴和参保要求。</p>
           </article>
+        </div>
+      </section>
+
+      <section class="section" id="calculator">
+        <div class="section-header">
+          <div>
+            <span class="section-eyebrow">智能测算</span>
+            <h2>灵工保智能保障体系</h2>
+          </div>
+          <p>输入城市、收入和参保偏好，快速获得更适合自己的缴费节奏与保障建议。</p>
+        </div>
+        <div class="system-layout">
+          <div class="system-flow">
+            <article class="flow-step">
+              <span>01</span>
+              <h3>填写基本信息</h3>
+              <p>选择所在城市、职业类型和当前收入范围。</p>
+            </article>
+            <article class="flow-step">
+              <span>02</span>
+              <h3>查看预算建议</h3>
+              <p>根据您的预算给出更合适的缴费节奏和金额建议。</p>
+            </article>
+            <article class="flow-step">
+              <span>03</span>
+              <h3>识别断保风险</h3>
+              <p>提前发现容易遗漏的时间节点，减少待遇中断风险。</p>
+            </article>
+            <article class="flow-step">
+              <span>04</span>
+              <h3>生成个人方案</h3>
+              <p>输出可执行的下一步动作，帮助您尽快完成办理。</p>
+            </article>
+          </div>
+
+          <aside class="calc-card">
+            <span class="section-eyebrow">快速测评入口</span>
+            <h3>30 秒生成您的缴费建议</h3>
+            <p>测评完成后，您将看到预算范围、提醒节点和北京政策解读。</p>
+            <ul class="calc-list">
+              <li>本月适合的缴费金额</li>
+              <li>下一次提醒时间</li>
+              <li>北京参保办理重点</li>
+            </ul>
+            <a class="btn btn-accent" href="#profile">开始生成方案</a>
+          </aside>
         </div>
       </section>
 
       <section class="section section-soft" id="policy">
         <div class="section-header">
           <div>
-            <span class="section-eyebrow">原“研究方法”商业化替换</span>
-            <h2>政策直通车</h2>
+            <span class="section-eyebrow">政策直通车</span>
+            <h2>北京市社保政策一键解读</h2>
           </div>
-          <p>把政策语言翻译成用户能理解、能执行、能复盘的服务动作。</p>
+          <p>把复杂政策拆成易理解的信息，帮助您更快判断自己现在要做什么。</p>
         </div>
-        <div class="card-grid card-grid-3">
+        <div class="card-grid card-grid-3 policy-grid">
           <article class="policy-card">
             <div class="policy-icon">01</div>
-            <h3>补贴资格速查</h3>
-            <p>快速判断是否符合灵活就业补贴、创业扶持补助等政策条件。</p>
+            <h3>灵活就业参保提示</h3>
+            <p>快速了解北京灵活就业人员的参保入口、办理材料和常见步骤。</p>
           </article>
           <article class="policy-card">
             <div class="policy-icon">02</div>
-            <h3>社保医保清单</h3>
-            <p>将繁杂政策拆解为办理材料、办理入口和时间节点三类信息。</p>
+            <h3>缴费节点提醒</h3>
+            <p>按月查看关键时间点，避免因为错过缴费而影响后续待遇。</p>
           </article>
           <article class="policy-card">
             <div class="policy-icon">03</div>
-            <h3>政策更新提醒</h3>
-            <p>围绕城市政策变动、缴费基数调整、窗口变更提供第一时间通知。</p>
+            <h3>补贴资格速查</h3>
+            <p>如果您符合条件，可快速查看本地补贴和相关办理说明。</p>
           </article>
         </div>
       </section>
 
-      <section class="section" id="showcase">
+      <section class="section" id="profile">
         <div class="section-header">
           <div>
-            <span class="section-eyebrow">原“研究成果 / 示意图”替换</span>
-            <h2>核心产品展示</h2>
+            <span class="section-eyebrow">个人中心</span>
+            <h2>我的保障方案</h2>
           </div>
-          <p>把学术原型升级为更具平台感、服务感与投资人沟通友好度的商业 Demo 形态。</p>
+          <p>根据您当前的预算、缴费状态和城市规则，推荐下一步最值得优先完成的事项。</p>
         </div>
-        <div class="showcase-layout">
-          <article class="showcase-main">
-            <div class="showcase-content">
-              <span class="showcase-badge">产品驾驶舱</span>
-              <h3>一屏看清用户保障状态</h3>
-              <p>整合参保状态、政策进展、风险提醒、服务建议，帮助用户快速做出下一步决策。</p>
-            </div>
-            <div class="showcase-screen">
-              <div class="screen-card">
-                <span class="screen-title">灵工保服务面板</span>
-                <div class="screen-row">
-                  <strong>参保状态</strong>
-                  <span class="screen-chip">正常缴费中</span>
-                </div>
-                <div class="screen-row">
-                  <strong>风险提示</strong>
-                  <span>下月 5 日前完成续缴</span>
-                </div>
-                <div class="screen-row">
-                  <strong>推荐动作</strong>
-                  <span>查看本地补贴资格</span>
-                </div>
-              </div>
-            </div>
+        <div class="profile-layout">
+          <article class="plan-summary">
+            <h3>本周优先事项</h3>
+            <ul class="plan-list">
+              <li>完成本月社保缴费</li>
+              <li>确认提醒通知方式</li>
+              <li>查看北京参保政策更新</li>
+            </ul>
           </article>
-
-          <div class="showcase-side">
-            <article class="mini-card">
-              <h3>AI 咨询助手</h3>
-              <p>用更自然的方式回答“怎么交、交多少、断缴怎么办”等核心问题。</p>
-            </article>
-            <article class="mini-card">
-              <h3>智能缴费测算</h3>
-              <p>根据职业类型、城市规则与预算区间，提供可执行的缴费建议。</p>
-            </article>
-            <article class="mini-card">
-              <h3>进度可视化跟踪</h3>
-              <p>从“知道政策”延伸到“真正办成”，提升平台复购与留存潜力。</p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="section section-soft" id="system">
-        <div class="section-header">
-          <div>
-            <span class="section-eyebrow">原“协同治理模型”替换</span>
-            <h2>数智化保障体系</h2>
-          </div>
-          <p>连接用户、顾问、平台与政策信息，形成可运营、可增长、可复制的服务链路。</p>
-        </div>
-        <div class="system-flow">
-          <article class="flow-step">
-            <span>01</span>
-            <h3>需求识别</h3>
-            <p>采集职业身份、城市归属、参保状态，快速建立用户画像。</p>
+          <article class="plan-summary">
+            <h3>预算建议</h3>
+            <ul class="plan-list">
+              <li>优先保证本月基础缴费</li>
+              <li>按周补充灵活缴费金额</li>
+              <li>保留下月缴费预备资金</li>
+            </ul>
           </article>
-          <article class="flow-step">
-            <span>02</span>
-            <h3>方案匹配</h3>
-            <p>输出适配的保障方案、缴费节奏和政策使用建议。</p>
+          <article class="plan-summary">
+            <h3>服务进度</h3>
+            <ul class="plan-list">
+              <li>社保状态：待补缴</li>
+              <li>风险提醒：已开启</li>
+              <li>政策解读：可立即查看</li>
+            </ul>
           </article>
-          <article class="flow-step">
-            <span>03</span>
-            <h3>政策触达</h3>
-            <p>通过政策直通车持续推送补贴、医保、创业扶持等关键资讯。</p>
-          </article>
-          <article class="flow-step">
-            <span>04</span>
-            <h3>服务闭环</h3>
-            <p>完成提醒、咨询、办理、复盘与复购推荐的长期运营闭环。</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="section" id="roadmap">
-        <div class="section-header">
-          <div>
-            <span class="section-eyebrow">原“对策建议”替换</span>
-            <h2>未来发展规划</h2>
-          </div>
-          <p>以比赛 Demo 为起点，逐步过渡到城市试点、平台合作和服务标准化输出。</p>
-        </div>
-        <div class="roadmap">
-          <article class="roadmap-item">
-            <strong>阶段一</strong>
-            <h3>校园比赛验证</h3>
-            <p>完成商业化视觉升级、Demo 路演优化与核心场景打磨。</p>
-          </article>
-          <article class="roadmap-item">
-            <strong>阶段二</strong>
-            <h3>城市样板落地</h3>
-            <p>联合本地人社政策资源与创业服务载体，形成可复制案例。</p>
-          </article>
-          <article class="roadmap-item">
-            <strong>阶段三</strong>
-            <h3>平台生态合作</h3>
-            <p>对接零工平台、创业园区、职业社群，拓展 B 端合作收入。</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="section cta-section">
-        <div class="cta-card">
-          <div>
-            <span class="section-eyebrow">项目定位</span>
-            <h2>灵工保：把“保障焦虑”转化为“服务机会”。</h2>
-            <p>适合创业比赛展示、路演答辩、静态网页演示与本地浏览器直接预览。</p>
-          </div>
-          <a class="btn" href="./index.html">回到登录入口</a>
         </div>
       </section>
     </main>
 
     <footer class="site-footer">
-      © 2026 灵工保 - 灵活就业者一站式社保服务平台 | 第五届“京彩大创”参赛项目。
+      © 2026 灵工保 - 灵活就业者一站式社保服务平台
     </footer>
   </div>
 </body>
