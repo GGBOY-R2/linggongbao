@@ -13,9 +13,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "灵工保 - 温暖的灵活就业社保服务平台",
-  description: "为2亿灵活就业者提供温暖、专业的社保咨询服务，让每个人都能感受到关怀与支持",
-  keywords: "灵活就业,社保咨询,智能缴费,AI助手,区块链存证",
+  title: "灵工保 - 劳务报酬代开与以票扣保一站式平台",
+  description:
+    "支持企业发起劳务报酬代开、个人移动端确认、税费模拟处理、数电发票生成，并联动社保储备金沉淀。",
+  keywords:
+    "灵工保,劳务报酬代开,以票扣保,社保储备金,灵活就业,AI顾问,数电发票",
   authors: [{ name: "灵工保团队" }],
   viewport: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no",
   icons: {

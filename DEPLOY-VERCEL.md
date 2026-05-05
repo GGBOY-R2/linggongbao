@@ -1,4 +1,16 @@
-# 灵工保 Vercel 快速部署
+# 灵工保 Vercel 部署说明
+
+## 当前部署方式
+
+本项目默认提供一套可直接上线的静态演示目录：
+
+- `deploy-static/`
+
+该目录已同步包含：
+- `index.html`：登录/入口页
+- `app.html`：劳务报酬代开 + 以票扣保主页面
+- `style.css`：静态样式文件
+- `1.jpg`：品牌图片资源
 
 ## 本地预览
 
@@ -8,50 +20,35 @@
 npm run dev
 ```
 
-默认打开：
-
+默认访问：
 - `http://localhost:3000`
-- 如果 3000 被占用，会自动顺延到 3001、3002...
 
-## 推荐部署方式（最省事）
+如果 3000 被占用，会自动顺延到 3001、3002 等端口。
 
-直接使用已经准备好的静态目录：
+## Vercel 部署方式
 
-- `deploy-static/`
-
-这个文件夹里已经包含：
-
-- `index.html`：登录入口页
-- `app.html`：产品展示主页
-- `style.css`
-- `1.jpg`
-
-## 方式 1：Vercel Drop（最快）
-
+### 方式一：Vercel Drop（最快）
 1. 打开 Vercel
-2. 进入 **Add New -> Project**
-3. 选择 **Browse** 或 **Drop**
-4. 直接上传整个 `deploy-static` 文件夹
-5. 部署完成后会得到一个 `xxx.vercel.app`
+2. 选择 **Add New -> Project**
+3. 选择 **Browse** 或直接拖拽上传
+4. 上传整个 `deploy-static/` 文件夹
+5. 等待部署完成
 
-## 方式 2：GitHub 导入
-
-1. 把当前项目推到 GitHub
-2. 在 Vercel 中点击 **Add New -> Project**
-3. 导入这个仓库
-4. 在 **Root Directory** 中选择：
+### 方式二：GitHub 导入
+1. 将当前仓库推送到 GitHub
+2. 在 Vercel 中选择 **Add New -> Project**
+3. 导入该仓库
+4. 将 **Root Directory** 设置为：
 
 ```text
 deploy-static
 ```
 
-5. 保持其他配置默认，直接 Deploy
+5. 其余配置保持默认，直接部署
 
-## 重要说明
+## 注意事项
 
-如果你直接把整个仓库根目录导入 Vercel，它可能会识别成原来的 Next.js 项目。
-
-为了确保部署的是这次商业化改造后的静态 Demo，请务必：
-
-- 选择 `deploy-static` 作为 Root Directory，或
-- 直接拖拽 `deploy-static` 文件夹到 Vercel Drop
+- 如果你部署的是静态演示页，请优先使用 `deploy-static/`
+- 根目录下的 `app.html / index.html / style.css` 也已同步更新，便于继续开发
+- 若后续继续修改静态页面，请记得同步更新 `deploy-static/` 中对应文件
+- Next.js 源码版本位于 `app/`，用于组件化开发与后续迭代
