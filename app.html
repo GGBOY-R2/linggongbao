@@ -1,275 +1,1263 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>灵工保｜劳务报酬代开联动</title>
-  <meta
-    name="description"
-    content="灵工保支持劳务报酬代开确认、社保储备金联动与 AI 顾问一站式服务。"
-  />
-  <link rel="stylesheet" href="./style.css" />
+  <title>灵工保业务后台</title>
+  <meta name="description" content="灵活就业参保、风险预警、AI 政策咨询与劳务结算后台" />
+  <style>
+    :root {
+      --bg: #f3f6fb;
+      --panel: #ffffff;
+      --sidebar: #111827;
+      --sidebar-soft: #1f2937;
+      --line: #dbe3ef;
+      --text: #0f172a;
+      --muted: #64748b;
+      --primary: #2563eb;
+      --shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    body {
+      min-width: 1280px;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .admin-shell {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: 260px;
+      padding: 24px 18px;
+      background: var(--sidebar);
+      color: #cbd5e1;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      border-right: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .brand-box {
+      padding: 18px;
+      border-radius: 20px;
+      background: linear-gradient(180deg, rgba(37, 99, 235, 0.25), rgba(37, 99, 235, 0.08));
+      border: 1px solid rgba(96, 165, 250, 0.28);
+    }
+
+    .brand-title {
+      margin: 0;
+      font-size: 24px;
+      color: #f8fafc;
+      letter-spacing: 0.04em;
+    }
+
+    .brand-subtitle {
+      margin: 8px 0 0;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #bfdbfe;
+    }
+
+    .sidebar-nav {
+      display: grid;
+      gap: 10px;
+    }
+
+    .nav-btn {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      background: transparent;
+      color: #cbd5e1;
+      text-align: left;
+      transition: 0.2s ease;
+    }
+
+    .nav-btn.active,
+    .nav-btn:hover {
+      background: rgba(37, 99, 235, 0.18);
+      border-color: rgba(96, 165, 250, 0.4);
+      color: #eff6ff;
+    }
+
+    .nav-btn span {
+      display: block;
+      font-size: 12px;
+      color: #94a3b8;
+      margin-top: 4px;
+    }
+
+    .sidebar-status {
+      margin-top: auto;
+      padding: 16px;
+      border-radius: 18px;
+      background: var(--sidebar-soft);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+    }
+
+    .sidebar-status label {
+      display: block;
+      font-size: 12px;
+      color: #94a3b8;
+      margin-bottom: 8px;
+    }
+
+    .sidebar-status strong {
+      display: block;
+      font-size: 16px;
+      color: #f8fafc;
+      margin-bottom: 6px;
+    }
+
+    .sidebar-status p {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #cbd5e1;
+    }
+
+    .main-panel {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(243, 246, 251, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+      padding: 20px 28px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .topbar-title small {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+
+    .topbar-title h1 {
+      margin: 8px 0 0;
+      font-size: 28px;
+      line-height: 1.25;
+    }
+
+    .topbar-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(160px, 1fr));
+      gap: 14px;
+      min-width: 560px;
+    }
+
+    .top-metric {
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+    }
+
+    .top-metric span {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .top-metric strong {
+      font-size: 24px;
+      line-height: 1.1;
+    }
+
+    .workspace {
+      padding: 24px 28px 96px;
+    }
+
+    .view {
+      display: none;
+    }
+
+    .view.active {
+      display: block;
+    }
+
+    .grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .dashboard-grid {
+      grid-template-columns: 1.6fr 1fr;
+    }
+
+    .risk-grid {
+      grid-template-columns: 1.4fr 1fr;
+    }
+
+    .span-full {
+      grid-column: 1 / -1;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .panel-kicker {
+      margin: 0 0 8px;
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+
+    .panel-title {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.25;
+    }
+
+    .panel-meta {
+      margin: 0;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      background: #eef2ff;
+      color: #3730a3;
+      white-space: nowrap;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .stat-card,
+    .summary-line,
+    .detail-item,
+    .settlement-row,
+    .action-chip,
+    .ai-overview {
+      padding: 16px;
+      border-radius: 16px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+    }
+
+    .stat-card span,
+    .summary-line span,
+    .detail-item span,
+    .settlement-row span,
+    .action-chip span {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .stat-card strong,
+    .summary-line strong,
+    .detail-item strong,
+    .settlement-row strong,
+    .action-chip strong {
+      font-size: 26px;
+      line-height: 1.1;
+    }
+
+    .health-wrap {
+      padding: 18px;
+      border-radius: 18px;
+      background: linear-gradient(180deg, #eff6ff, #ffffff);
+      border: 1px solid #dbeafe;
+    }
+
+    .health-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+
+    .health-score-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+    }
+
+    .health-score-row strong {
+      font-size: 42px;
+      line-height: 1;
+    }
+
+    .health-score-row span {
+      font-size: 14px;
+      color: var(--muted);
+      padding-bottom: 6px;
+    }
+
+    .health-progress-track {
+      height: 12px;
+      border-radius: 999px;
+      background: #dbeafe;
+      overflow: hidden;
+    }
+
+    .health-progress-value {
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #2563eb, #22c55e);
+      transition: width 0.35s ease;
+    }
+
+    .health-wrap p {
+      margin: 14px 0 0;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .income-board {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      height: 100%;
+    }
+
+    .income-bars {
+      height: 260px;
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 14px;
+      align-items: end;
+    }
+
+    .bar-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .bar-track {
+      width: 100%;
+      height: 200px;
+      border-radius: 14px;
+      background: #e2e8f0;
+      display: flex;
+      align-items: flex-end;
+      padding: 8px;
+    }
+
+    .bar-fill {
+      width: 100%;
+      border-radius: 10px;
+      background: linear-gradient(180deg, #60a5fa, #2563eb);
+      transition: height 0.35s ease;
+    }
+
+    .bar-item span,
+    .bar-item strong {
+      font-size: 12px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .bar-item strong {
+      font-size: 13px;
+      color: var(--text);
+    }
+
+    .income-summary {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .stepper {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .step-item {
+      padding: 16px;
+      border-radius: 16px;
+      border: 1px solid #dbe3ef;
+      background: #f8fafc;
+    }
+
+    .step-item.done {
+      background: #f0fdf4;
+      border-color: #bbf7d0;
+    }
+
+    .step-item.active {
+      background: #eff6ff;
+      border-color: #93c5fd;
+    }
+
+    .step-index {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      margin-bottom: 12px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      background: #94a3b8;
+    }
+
+    .step-item.done .step-index {
+      background: #16a34a;
+    }
+
+    .step-item.active .step-index {
+      background: var(--primary);
+    }
+
+    .step-item strong {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 8px;
+    }
+
+    .step-item p {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    .gauge-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 22px;
+      align-items: center;
+    }
+
+    .gauge {
+      --progress: 0;
+      width: 220px;
+      height: 220px;
+      margin: 0 auto;
+      border-radius: 50%;
+      background: conic-gradient(#2563eb calc(var(--progress) * 3.6deg), #e2e8f0 0);
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+
+    .gauge::before {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: inset 0 0 0 1px #e2e8f0;
+    }
+
+    .gauge-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+
+    .gauge-content strong {
+      display: block;
+      font-size: 38px;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .gauge-content span {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .detail-list,
+    .action-metrics {
+      display: grid;
+      gap: 12px;
+    }
+
+    .detail-item strong,
+    .action-chip strong {
+      font-size: 20px;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 14px;
+      padding: 12px 18px;
+      font-weight: 600;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .btn:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 10px 24px rgba(37, 99, 235, 0.25);
+    }
+
+    .btn-secondary {
+      background: #e2e8f0;
+      color: var(--text);
+    }
+
+    .btn-block {
+      width: 100%;
+    }
+
+    .plan-result {
+      margin-top: 16px;
+      min-height: 260px;
+      padding: 18px;
+      border-radius: 16px;
+      border: 1px solid #dbe3ef;
+      background: #f8fafc;
+    }
+
+    .plan-result.empty {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .plan-result h3 {
+      margin: 0 0 12px;
+      font-size: 18px;
+    }
+
+    .plan-result ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .plan-timestamp {
+      display: inline-flex;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: #e0f2fe;
+      color: #0369a1;
+      font-size: 12px;
+      margin-bottom: 12px;
+    }
+
+    .settlement-card.is-completed {
+      border-color: #86efac;
+      box-shadow: 0 16px 40px rgba(34, 197, 94, 0.08);
+    }
+
+    .settlement-layout {
+      display: grid;
+      grid-template-columns: 1.6fr 0.9fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .settlement-amount {
+      padding: 18px;
+      border-radius: 18px;
+      background: linear-gradient(180deg, #eff6ff, #f8fafc);
+      border: 1px solid #dbeafe;
+      margin-bottom: 16px;
+    }
+
+    .settlement-amount span {
+      display: block;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .settlement-amount strong {
+      font-size: 42px;
+      line-height: 1;
+    }
+
+    .settlement-table {
+      display: grid;
+      gap: 12px;
+    }
+
+    .settlement-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .settlement-note,
+    .action-panel p,
+    .ai-overview p {
+      margin: 16px 0 0;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .action-panel {
+      padding: 18px;
+      border-radius: 18px;
+      border: 1px solid #dbe3ef;
+      background: #f8fafc;
+    }
+
+    .sub-block-title,
+    .modal-title,
+    .plan-title {
+      margin: 0 0 14px;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .action-panel p {
+      margin: 0 0 14px;
+    }
+
+    .ai-overview-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .ai-overview ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .ai-floating-panel {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      width: 390px;
+      border-radius: 20px;
+      border: 1px solid #dbe3ef;
+      background: #fff;
+      box-shadow: 0 24px 60px rgba(15, 23, 42, 0.18);
+      overflow: hidden;
+      z-index: 40;
+      transition: width 0.2s ease;
+    }
+
+    .ai-floating-panel.collapsed {
+      width: 260px;
+    }
+
+    .ai-panel-header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: none;
+      background: linear-gradient(90deg, #1d4ed8, #2563eb);
+      color: #fff;
+      padding: 16px 18px;
+      text-align: left;
+    }
+
+    .ai-panel-header strong {
+      display: block;
+      font-size: 16px;
+      margin-bottom: 4px;
+    }
+
+    .ai-panel-header span {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .ai-panel-body {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      height: 500px;
+    }
+
+    .collapsed .ai-panel-body {
+      display: none;
+    }
+
+    .ai-status-line {
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: #eff6ff;
+      border: 1px solid #dbeafe;
+      color: #1d4ed8;
+      font-size: 13px;
+    }
+
+    .ai-conversation-static {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px;
+      border-radius: 16px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .ai-message-bubble {
+      max-width: 88%;
+      padding: 10px 12px;
+      border-radius: 14px;
+      line-height: 1.7;
+      font-size: 14px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .ai-message-bubble.assistant {
+      align-self: flex-start;
+      background: #eef2ff;
+    }
+
+    .ai-message-bubble.user {
+      align-self: flex-end;
+      background: #dbeafe;
+    }
+
+    .ai-quick-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .quick-chip {
+      border: 1px solid #bfdbfe;
+      border-radius: 999px;
+      padding: 8px 12px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      font-size: 13px;
+    }
+
+    .ai-input-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .ai-text-input {
+      flex: 1;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 12px 14px;
+      outline: none;
+      background: #fff;
+    }
+
+    .ai-text-input:focus {
+      border-color: #60a5fa;
+      box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.18);
+    }
+
+    .gov-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.46);
+      display: grid;
+      place-items: center;
+      z-index: 50;
+      padding: 20px;
+    }
+
+    .gov-modal-card {
+      width: min(520px, 100%);
+      padding: 24px;
+      border-radius: 22px;
+      background: #fff;
+      border: 1px solid #dbe3ef;
+      box-shadow: 0 30px 70px rgba(15, 23, 42, 0.28);
+    }
+
+    .gov-modal-tag {
+      display: inline-flex;
+      margin-bottom: 12px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .gov-modal-card p {
+      margin: 0 0 16px;
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--muted);
+    }
+
+    .gov-modal-summary {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .gov-modal-summary div {
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid #e2e8f0;
+      background: #f8fafc;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .gov-modal-summary span {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .gov-modal-summary strong {
+      font-size: 18px;
+    }
+
+    .gov-modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+
+    .floating-toast {
+      position: fixed;
+      left: 50%;
+      bottom: 26px;
+      transform: translateX(-50%);
+      padding: 12px 18px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      color: #fff;
+      z-index: 60;
+    }
+
+    .is-hidden {
+      display: none !important;
+    }
+
+    .value-updated {
+      animation: pulse 0.45s ease;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.06); }
+      100% { transform: scale(1); }
+    }
+  </style>
 </head>
-<body class="page-home">
-  <div class="site-shell app-dashboard-shell">
-    <header class="site-header">
-      <div class="header-inner">
-        <a class="brand" href="./app.html">
-          <img src="./1.jpg" alt="灵工保 Logo" />
-          <span>灵工保</span>
-        </a>
-        <nav class="nav-links">
-          <a href="#dashboard">首页</a>
-          <a href="#settlement">劳务结算</a>
-          <a href="#health">社保健康度</a>
-          <a href="#ai-consultant">AI 顾问</a>
-        </nav>
-      </div>
-    </header>
-
-    <main class="site-main dashboard-static-main" id="dashboard">
-      <section class="dashboard-banner-static">
-        <div class="banner-copy">
-          <span class="hero-tag">2026 最新政策联动</span>
-          <h1>劳务报酬代开 + 以票扣保</h1>
-          <p>
-            企业发起代开申请后，您只需在灵工保确认，即可模拟完成税费处理、生成数电发票，并同步沉淀社保储备金，保障不断线。
-          </p>
-          <div class="banner-actions">
-            <a class="btn btn-accent" href="#settlement">立即处理待办结算</a>
-          </div>
-        </div>
-        <div class="balance-side-card">
-          <span>当前账户余额</span>
-          <strong id="reserveBalanceBanner">¥180.00</strong>
-          <small>确认开票后将自动增加社保储备金</small>
-        </div>
+<body>
+  <div class="admin-shell">
+    <aside class="sidebar">
+      <section class="brand-box">
+        <div class="brand-title">灵工保</div>
+        <p class="brand-subtitle">业务后台：参保、风险预警、劳务结算、政策咨询</p>
       </section>
 
-      <section class="section-block" id="settlement">
-        <div class="section-header compact-header">
-          <div>
-            <span class="section-eyebrow">劳务结算中心</span>
-            <h2>待办劳务费结算</h2>
-          </div>
-          <p>企业发起 → 个人移动端确认 → 缴纳税费 → 生成数电发票，同时联动灵工保微额社保代扣。</p>
-        </div>
+      <nav class="sidebar-nav" aria-label="主导航">
+        <button class="nav-btn active" type="button" data-view-target="dashboard">
+          数据看板
+          <span>账户、流程、收入概览</span>
+        </button>
+        <button class="nav-btn" type="button" data-view-target="risk">
+          参保风险预警
+          <span>收入波动与断缴概率</span>
+        </button>
+        <button class="nav-btn" type="button" data-view-target="settlement">
+          劳务结算
+          <span>新增插件：待确认款项</span>
+        </button>
+        <button class="nav-btn" type="button" data-view-target="ai">
+          AI 政策顾问
+          <span>连接 AI_Consultant</span>
+        </button>
+      </nav>
 
-        <article class="settlement-card-static" id="settlementCard">
-          <div class="settlement-top-row">
-            <div>
-              <span class="settlement-kicker">待办任务</span>
-              <h3>来自某某技术公司的劳务费结算</h3>
-            </div>
-            <span class="settlement-badge" id="settlementBadge">待确认</span>
-          </div>
-
-          <p class="settlement-desc">
-            当前有一笔 <strong>¥2,000.00</strong> 劳务报酬待确认开票，预计税费 <strong>¥20.00</strong>（按 1% 模拟计算）。
-          </p>
-
-          <div class="settlement-metrics-grid">
-            <div class="settlement-metric-card">
-              <span>劳务费金额</span>
-              <strong>¥2,000.00</strong>
-            </div>
-            <div class="settlement-metric-card">
-              <span>预计税费</span>
-              <strong>¥20.00</strong>
-              <small>按 1% 模拟计算</small>
-            </div>
-            <div class="settlement-metric-card">
-              <span>预扣社保</span>
-              <strong id="reserveDepositValue">¥20.00</strong>
-              <small>确认后自动转入储备金</small>
-            </div>
-          </div>
-
-          <button class="btn settlement-confirm-btn" id="invoiceInsuranceBtn" type="button">
-            确认开票并预扣社保
-          </button>
-          <p class="settlement-note" id="settlementNote">
-            完成确认后，首页社保健康度与账户余额将自动实时更新。
-          </p>
-        </article>
+      <section class="sidebar-status">
+        <label>当前流程</label>
+        <strong id="sidebarStepText">方案选择</strong>
+        <p id="sidebarStepDesc">待确认劳务结算，确认后同步更新社保金额。</p>
       </section>
+    </aside>
 
-      <section class="summary-grid-static">
-        <article class="summary-card summary-profile-card">
-          <div class="summary-card-head">
-            <span class="summary-avatar">灵</span>
-            <div>
-              <h3>张小明</h3>
-              <p>自由设计师 · 灵工保企业结算版</p>
-            </div>
-          </div>
-          <div class="summary-stats-grid">
-            <div>
-              <strong>750</strong>
-              <span>信用评分</span>
-            </div>
-            <div>
-              <strong>36</strong>
-              <span>保障月数</span>
-            </div>
-            <div>
-              <strong id="socialHealthStat">86</strong>
-              <span>社保健康度</span>
-            </div>
-            <div>
-              <strong id="reserveBalanceStat">¥180.00</strong>
-              <span>账户余额</span>
-            </div>
-          </div>
-        </article>
+    <div class="main-panel">
+      <header class="topbar">
+        <div class="topbar-title">
+          <small>灵活就业参保后台</small>
+          <h1 id="viewTitle">[数据看板]</h1>
+        </div>
+        <div class="topbar-metrics">
+          <article class="top-metric">
+            <span>社保总金额</span>
+            <strong id="headerSocialAmount">¥4,280.00</strong>
+          </article>
+          <article class="top-metric">
+            <span>账户余额</span>
+            <strong id="reserveBalanceBanner">¥180.00</strong>
+          </article>
+          <article class="top-metric">
+            <span>断缴概率预测</span>
+            <strong id="headerRiskProbability">0%</strong>
+          </article>
+        </div>
+      </header>
 
-        <article class="summary-card health-card-static" id="health">
-          <div class="health-card-top">
-            <div>
-              <span class="section-eyebrow">社保健康度</span>
-              <div class="health-score-row">
-                <strong id="socialHealthScore">86</strong>
-                <span>分</span>
+      <main class="workspace">
+        <section class="view active" data-view="dashboard">
+          <div class="grid dashboard-grid">
+            <article class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="panel-kicker">主工作区</p>
+                  <h2 class="panel-title">[数据看板]</h2>
+                  <p class="panel-meta">查看账户余额、参保稳定度、断缴概率与待扣保金额。</p>
+                </div>
+                <span class="tag" id="healthPill">风险等级：中</span>
               </div>
+
+              <div class="stats-grid">
+                <div class="stat-card">
+                  <span>账户余额</span>
+                  <strong id="reserveBalanceStat">¥180.00</strong>
+                </div>
+                <div class="stat-card">
+                  <span>参保稳定度</span>
+                  <strong id="socialHealthStat">86</strong>
+                </div>
+                <div class="stat-card">
+                  <span>断缴概率预测</span>
+                  <strong id="dashboardRiskProbability">0%</strong>
+                </div>
+                <div class="stat-card">
+                  <span>本次待扣保金额</span>
+                  <strong id="reserveDepositValue">¥20.00</strong>
+                </div>
+              </div>
+
+              <div class="health-wrap">
+                <div class="health-card-top">
+                  <div>
+                    <p class="panel-kicker">参保评分</p>
+                    <div class="health-score-row">
+                      <strong id="socialHealthScore">86</strong>
+                      <span>分</span>
+                    </div>
+                  </div>
+                  <span class="tag" id="dashboardStepHint">当前步骤：方案选择</span>
+                </div>
+                <div class="health-progress-track" aria-hidden="true">
+                  <div class="health-progress-value" id="healthProgressBar" style="width: 86%;"></div>
+                </div>
+                <p id="healthDescription">当前账户余额为 ¥180.00，收入波动将影响断缴概率预测。</p>
+              </div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="panel-kicker">收入波动</p>
+                  <p class="panel-meta">最近 6 个月收入记录</p>
+                </div>
+              </div>
+              <div class="income-board">
+                <div class="income-bars" id="incomeBars"></div>
+                <div class="income-summary">
+                  <div class="summary-line">
+                    <span>月均收入</span>
+                    <strong id="averageIncome">¥0.00</strong>
+                  </div>
+                  <div class="summary-line">
+                    <span>波动系数</span>
+                    <strong id="incomeFluctuationSummary">0%</strong>
+                  </div>
+                  <div class="summary-line">
+                    <span>收入区间</span>
+                    <strong id="incomeRange">¥0.00</strong>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="panel span-full">
+              <div class="panel-header">
+                <div>
+                  <p class="panel-kicker">流程引导</p>
+                  <p class="panel-meta">参保全流程进度条</p>
+                </div>
+              </div>
+              <div class="stepper" id="processStepper"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="view" data-view="risk">
+          <div class="grid risk-grid">
+            <article class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="panel-kicker">风险分析</p>
+                  <h2 class="panel-title">[参保风险预警]</h2>
+                  <p class="panel-meta">收入波动越大、账户缓冲越低，断缴概率越高。</p>
+                </div>
+                <span class="tag" id="riskLevelTag">中</span>
+              </div>
+
+              <div class="gauge-layout">
+                <div class="gauge" id="riskGauge" style="--progress: 0;">
+                  <div class="gauge-content">
+                    <strong id="riskProbability">0%</strong>
+                    <span>断缴概率预测</span>
+                  </div>
+                </div>
+                <div class="detail-list">
+                  <div class="detail-item">
+                    <span>收入波动</span>
+                    <strong id="incomeFluctuation">0%</strong>
+                  </div>
+                  <div class="detail-item">
+                    <span>风险等级</span>
+                    <strong id="riskLevelText">中</strong>
+                  </div>
+                  <div class="detail-item">
+                    <span>账户余额</span>
+                    <strong id="riskBalance">¥180.00</strong>
+                  </div>
+                  <div class="detail-item">
+                    <span>结算状态</span>
+                    <strong id="settlementBadgeMirror">待确认</strong>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="panel-kicker">方案定制</p>
+                  <p class="panel-meta">根据当前风险状态生成建议。</p>
+                </div>
+              </div>
+              <button class="btn btn-primary btn-block" id="generatePlanBtn" type="button">点击生成个性化参保方案</button>
+              <div class="plan-result empty" id="planResult">点击按钮后显示个性化参保方案。</div>
+            </article>
+          </div>
+        </section>
+
+        <section class="view" data-view="settlement">
+          <article class="panel settlement-card" id="settlementCard">
+            <div class="panel-header">
+              <div>
+                <p class="panel-kicker">新增插件</p>
+                <h2 class="panel-title">[劳务结算中心]</h2>
+                <p class="panel-meta">该模块与原有参保逻辑并存，确认后同步扣保。</p>
+              </div>
+              <span class="tag" id="settlementBadge">待确认</span>
             </div>
-            <span class="health-pill" id="healthPill">待补充储备金</span>
-          </div>
-          <div class="health-progress-track" aria-hidden="true">
-            <div class="health-progress-value" id="healthProgressBar" style="width: 86%;"></div>
-          </div>
-          <p id="healthDescription">
-            当前账户余额 <strong>¥180.00</strong>，可用于微额社保代扣。完成待办结算后会自动增加对应储备金。
-          </p>
-        </article>
-      </section>
 
-      <section class="section-block" id="status-overview">
-        <div class="section-header compact-header">
-          <div>
-            <span class="section-eyebrow">社保状态总览</span>
-            <h2>保障情况一目了然</h2>
-          </div>
-        </div>
+            <div class="settlement-layout">
+              <div>
+                <div class="settlement-amount">
+                  <span>待确认金额（来自某技术公司）</span>
+                  <strong>¥2,000.00</strong>
+                </div>
+                <div class="settlement-table">
+                  <div class="settlement-row">
+                    <span>付款单位</span>
+                    <strong>某技术公司</strong>
+                  </div>
+                  <div class="settlement-row">
+                    <span>劳务结算金额</span>
+                    <strong>¥2,000.00</strong>
+                  </div>
+                  <div class="settlement-row">
+                    <span>扣保比例</span>
+                    <strong>1%</strong>
+                  </div>
+                  <div class="settlement-row">
+                    <span>本次计入社保金额</span>
+                    <strong>¥20.00</strong>
+                  </div>
+                </div>
+                <p class="settlement-note" id="settlementNote">点击“确认并扣保”后，顶部社保总金额与账户余额会实时更新。</p>
+              </div>
 
-        <div class="card-grid card-grid-3 upgraded-status-grid">
-          <article class="status-card upgraded-status-card status-good">
-            <span class="status-label">正常</span>
-            <h3>连续保障 36 个月</h3>
-            <p>参保状态稳定，历史保障记录完整，可继续按票沉淀储备金。</p>
-          </article>
-          <article class="status-card upgraded-status-card status-warn">
-            <span class="status-label">预警</span>
-            <h3>当前有 1 项待办结算</h3>
-            <p>建议优先确认企业发起的代开申请，自动补充微额社保储备金。</p>
-          </article>
-          <article class="status-card upgraded-status-card status-info">
-            <span class="status-label">联动建议</span>
-            <h3>优先处理本笔票据</h3>
-            <p>完成开票后，税费与预扣社保储备逻辑可一次联动完成。</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="section-block" id="services">
-        <div class="section-header compact-header">
-          <div>
-            <span class="section-eyebrow">智能服务方案</span>
-            <h2>围绕开票领薪缴保的一站式能力</h2>
-          </div>
-        </div>
-
-        <div class="card-grid card-grid-4 upgraded-service-grid">
-          <article class="service-card upgraded-service-card">
-            <div class="service-icon">票</div>
-            <h3>代开发票联动</h3>
-            <p>企业发起、个人确认、税费模拟、数电发票生成一体化体验。</p>
-          </article>
-          <article class="service-card upgraded-service-card">
-            <div class="service-icon">保</div>
-            <h3>以票扣保</h3>
-            <p>按开票金额 1% 模拟沉淀社保储备金，减少断缴风险。</p>
-          </article>
-          <article class="service-card upgraded-service-card">
-            <div class="service-icon">账</div>
-            <h3>余额联动</h3>
-            <p>确认开票后实时更新账户余额与社保健康度，状态更透明。</p>
-          </article>
-          <article class="service-card upgraded-service-card">
-            <div class="service-icon">智</div>
-            <h3>AI 顾问</h3>
-            <p>围绕发票、领工资、报酬和缴保问题给出场景化回复。</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="section-block" id="ai-consultant">
-        <div class="section-header compact-header">
-          <div>
-            <span class="section-eyebrow">AI 顾问</span>
-            <h2>实时解答“领薪 + 缴保”联动问题</h2>
-          </div>
-        </div>
-
-        <article class="ai-consultant-card">
-          <div class="ai-card-head">
-            <div class="ai-badge">AI</div>
-            <div>
-              <h3>灵工保 AI 顾问</h3>
-              <p>根据用户输入自动匹配最新场景答复</p>
+              <aside class="action-panel">
+                <div class="sub-block-title">结算动作</div>
+                <p>本笔劳务结算确认后，将按 1% 计入社保总金额，并同步提升参保稳定度。</p>
+                <div class="action-metrics">
+                  <div class="action-chip">
+                    <span>本次待扣保</span>
+                    <strong>¥20.00</strong>
+                  </div>
+                  <div class="action-chip">
+                    <span>确认后状态</span>
+                    <strong>缴费确认完成</strong>
+                  </div>
+                </div>
+                <button class="btn btn-primary btn-block" id="invoiceInsuranceBtn" type="button">确认并扣保</button>
+              </aside>
             </div>
-          </div>
+          </article>
+        </section>
 
-          <div class="ai-conversation-static" id="aiConversation" aria-live="polite"></div>
+        <section class="view" data-view="ai">
+          <article class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="panel-kicker">对话工具</p>
+                <h2 class="panel-title">[AI 政策顾问]</h2>
+                <p class="panel-meta">悬浮窗口已接入 AI_Consultant 函数，可直接提问开票、断缴、方案与结算问题。</p>
+              </div>
+              <span class="tag">AI_Consultant 已连接</span>
+            </div>
 
-          <div class="ai-quick-list">
-            <button class="quick-chip" type="button" data-question="企业发起代开发票后怎么领工资？">企业发起代开发票后怎么领工资？</button>
-            <button class="quick-chip" type="button" data-question="报酬确认后会同步缴保吗？">报酬确认后会同步缴保吗？</button>
-            <button class="quick-chip" type="button" data-question="发票确认后多久到账？">发票确认后多久到账？</button>
-            <button class="quick-chip" type="button" data-question="断缴有什么影响？">断缴有什么影响？</button>
-          </div>
-
-          <div class="ai-input-row">
-            <input
-              id="aiInput"
-              class="ai-text-input"
-              type="text"
-              placeholder="请输入发票、领工资、报酬等问题..."
-            />
-            <button id="aiSendBtn" class="btn btn-secondary" type="button">发送</button>
-          </div>
-        </article>
-      </section>
-    </main>
-
-    <footer class="site-footer">
-      © 2026 灵工保 - 灵活就业者一站式领薪缴保服务平台
-    </footer>
+            <div class="ai-overview-grid">
+              <article class="ai-overview">
+                <div class="sub-block-title">可问事项</div>
+                <ul>
+                  <li>如何开票</li>
+                  <li>断缴了怎么办</li>
+                  <li>如何确认劳务结算</li>
+                </ul>
+              </article>
+              <article class="ai-overview">
+                <div class="sub-block-title">当前上下文</div>
+                <p>AI 回答会读取当前收入波动、账户余额、断缴概率与结算状态。</p>
+              </article>
+              <article class="ai-overview">
+                <div class="sub-block-title">交互位置</div>
+                <p>右下角悬浮窗口可折叠，支持预设问题和自由输入。</p>
+              </article>
+            </div>
+          </article>
+        </section>
+      </main>
+    </div>
   </div>
+
+  <section class="ai-floating-panel" id="aiFloatingPanel" aria-label="AI 政策顾问窗口">
+    <button class="ai-panel-header" id="toggleAiPanel" type="button" aria-expanded="true">
+      <div>
+        <strong>[AI 政策顾问]</strong>
+        <span>悬浮对话窗口</span>
+      </div>
+      <span id="toggleAiText">收起</span>
+    </button>
+    <div class="ai-panel-body">
+      <div class="ai-status-line">函数状态：AI_Consultant 已连接</div>
+      <div class="ai-conversation-static" id="aiConversation" aria-live="polite"></div>
+      <div class="ai-quick-list">
+        <button class="quick-chip" type="button" data-question="如何开票？">如何开票？</button>
+        <button class="quick-chip" type="button" data-question="断缴了怎么办？">断缴了怎么办？</button>
+        <button class="quick-chip" type="button" data-question="如何确认劳务结算？">如何确认劳务结算？</button>
+        <button class="quick-chip" type="button" data-question="请生成参保方案。">请生成参保方案。</button>
+      </div>
+      <div class="ai-input-row">
+        <input id="aiInput" class="ai-text-input" type="text" placeholder="请输入开票、断缴、劳务结算或参保方案问题" />
+        <button id="aiSendBtn" class="btn btn-secondary" type="button">发送</button>
+      </div>
+    </div>
+  </section>
 
   <div class="gov-modal-backdrop is-hidden" id="govModalBackdrop">
     <div class="gov-modal-card" role="dialog" aria-modal="true" aria-labelledby="govModalTitle">
-      <span class="gov-modal-tag">政务端跳转确认</span>
-      <h3 id="govModalTitle">确认办理劳务报酬代开发票</h3>
-      <p>
-        企业已发起代开申请。确认后将模拟完成税费处理，并按开票金额 1% 自动预扣社保储备金。
-      </p>
+      <span class="gov-modal-tag">确认操作</span>
+      <div class="modal-title" id="govModalTitle">确认处理劳务结算并扣保</div>
+      <p>确认后，将把某技术公司的 ¥2,000.00 劳务结算按 1% 计入社保总金额和账户余额。</p>
       <div class="gov-modal-summary">
         <div>
-          <span>企业名称</span>
-          <strong>某某技术公司</strong>
+          <span>付款单位</span>
+          <strong>某技术公司</strong>
         </div>
         <div>
-          <span>开票金额</span>
+          <span>劳务结算金额</span>
           <strong>¥2,000.00</strong>
         </div>
         <div>
-          <span>预计存入</span>
+          <span>本次计入社保金额</span>
           <strong>¥20.00</strong>
         </div>
       </div>
       <div class="gov-modal-actions">
-        <button class="btn btn-secondary modal-plain-btn" id="modalCancelBtn" type="button">稍后处理</button>
-        <button class="btn btn-accent modal-plain-btn" id="modalConfirmBtn" type="button">确认并继续</button>
+        <button class="btn btn-secondary" id="modalCancelBtn" type="button">取消</button>
+        <button class="btn btn-primary" id="modalConfirmBtn" type="button">确认并继续</button>
       </div>
     </div>
   </div>
@@ -280,26 +1268,52 @@
     (() => {
       const TAX_RATE = 0.01;
       const invoiceTask = {
-        companyName: '某某技术公司',
+        companyName: '某技术公司',
         amount: 2000,
       };
-      const aiPolicyReply = '根据 2026 最新政策，您只需在灵工保确认企业发起的代开申请即可一站式领薪缴保。';
+      const aiPolicyReply = '已连接 AI_Consultant。可以继续提问开票、断缴、劳务结算或参保方案问题。';
 
       let reserveBalance = 180;
       let socialHealth = 86;
       let invoiceCompleted = false;
       let toastTimer = null;
 
+      let socialSecurityTotal = 4280;
+      let workflowStep = 2;
+      const incomeSeries = [7200, 9600, 5800, 8400, 6100, 7900];
+      const incomeLabels = ['近6月-5', '近6月-4', '近6月-3', '近6月-2', '近6月-1', '本月'];
+      const stepLabels = ['资格校验', '方案选择', '缴费确认', '待遇生效'];
+      const stepDescriptions = [
+        '校验参保资格与基础资料。',
+        '根据收入状态选择参保方案。',
+        '确认缴费与扣保动作。',
+        '等待待遇状态生效。',
+      ];
+
+      const displayState = {
+        reserveBalance,
+        socialHealth,
+        socialSecurityTotal,
+        riskProbability: 0,
+      };
+
       const els = {
+        viewTitle: document.getElementById('viewTitle'),
         reserveBalanceBanner: document.getElementById('reserveBalanceBanner'),
+        headerSocialAmount: document.getElementById('headerSocialAmount'),
+        headerRiskProbability: document.getElementById('headerRiskProbability'),
         reserveBalanceStat: document.getElementById('reserveBalanceStat'),
         socialHealthStat: document.getElementById('socialHealthStat'),
         socialHealthScore: document.getElementById('socialHealthScore'),
+        dashboardRiskProbability: document.getElementById('dashboardRiskProbability'),
         healthPill: document.getElementById('healthPill'),
+        dashboardStepHint: document.getElementById('dashboardStepHint'),
         healthProgressBar: document.getElementById('healthProgressBar'),
         healthDescription: document.getElementById('healthDescription'),
         settlementBadge: document.getElementById('settlementBadge'),
+        settlementBadgeMirror: document.getElementById('settlementBadgeMirror'),
         settlementNote: document.getElementById('settlementNote'),
+        reserveDepositValue: document.getElementById('reserveDepositValue'),
         invoiceInsuranceBtn: document.getElementById('invoiceInsuranceBtn'),
         settlementCard: document.getElementById('settlementCard'),
         govModalBackdrop: document.getElementById('govModalBackdrop'),
@@ -310,13 +1324,75 @@
         aiInput: document.getElementById('aiInput'),
         aiSendBtn: document.getElementById('aiSendBtn'),
         quickChips: Array.from(document.querySelectorAll('[data-question]')),
+        navButtons: Array.from(document.querySelectorAll('[data-view-target]')),
+        views: Array.from(document.querySelectorAll('[data-view]')),
+        incomeBars: document.getElementById('incomeBars'),
+        averageIncome: document.getElementById('averageIncome'),
+        incomeFluctuationSummary: document.getElementById('incomeFluctuationSummary'),
+        incomeRange: document.getElementById('incomeRange'),
+        processStepper: document.getElementById('processStepper'),
+        sidebarStepText: document.getElementById('sidebarStepText'),
+        sidebarStepDesc: document.getElementById('sidebarStepDesc'),
+        riskGauge: document.getElementById('riskGauge'),
+        riskProbability: document.getElementById('riskProbability'),
+        incomeFluctuation: document.getElementById('incomeFluctuation'),
+        riskLevelTag: document.getElementById('riskLevelTag'),
+        riskLevelText: document.getElementById('riskLevelText'),
+        riskBalance: document.getElementById('riskBalance'),
+        generatePlanBtn: document.getElementById('generatePlanBtn'),
+        planResult: document.getElementById('planResult'),
+        toggleAiPanel: document.getElementById('toggleAiPanel'),
+        toggleAiText: document.getElementById('toggleAiText'),
+        aiFloatingPanel: document.getElementById('aiFloatingPanel'),
       };
 
       const formatCurrency = (value) => {
-        return `¥${value.toLocaleString('zh-CN', {
+        return `¥${Number(value).toLocaleString('zh-CN', {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2,
         })}`;
+      };
+
+      const formatPercent = (value) => `${Math.round(value)}%`;
+      const formatInteger = (value) => String(Math.round(value));
+
+      const animateValue = (element, from, to, formatter) => {
+        if (!element) {
+          return;
+        }
+
+        if (from === to) {
+          element.textContent = formatter(to);
+          return;
+        }
+
+        const duration = 520;
+        const startedAt = performance.now();
+
+        const frame = (now) => {
+          const progress = Math.min((now - startedAt) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          const nextValue = from + (to - from) * eased;
+          element.textContent = formatter(nextValue);
+
+          if (progress < 1) {
+            requestAnimationFrame(frame);
+          } else {
+            element.textContent = formatter(to);
+            element.classList.remove('value-updated');
+            void element.offsetWidth;
+            element.classList.add('value-updated');
+            window.setTimeout(() => element.classList.remove('value-updated'), 460);
+          }
+        };
+
+        requestAnimationFrame(frame);
+      };
+
+      const syncAnimatedValue = (key, nextValue, formatter, targets) => {
+        const previous = displayState[key];
+        targets.filter(Boolean).forEach((element) => animateValue(element, previous, nextValue, formatter));
+        displayState[key] = nextValue;
       };
 
       const appendMessage = (role, content) => {
@@ -325,22 +1401,75 @@
         message.textContent = content;
         els.aiConversation.appendChild(message);
         els.aiConversation.scrollTop = els.aiConversation.scrollHeight;
+        return message;
       };
 
-      const getAIReply = (question) => {
-        if (['发票', '领工资', '报酬'].some((keyword) => question.includes(keyword))) {
-          return aiPolicyReply;
-        }
+      const calculateFluctuation = (series) => {
+        const average = series.reduce((sum, value) => sum + value, 0) / series.length;
+        const variance = series.reduce((sum, value) => sum + Math.pow(value - average, 2), 0) / series.length;
+        const standardDeviation = Math.sqrt(variance);
+        return (standardDeviation / average) * 100;
+      };
 
-        if (question.includes('社保') || question.includes('缴保')) {
-          return '灵工保会将结算联动沉淀到社保储备金余额，便于后续自动代扣，减少断缴风险。';
-        }
+      const getRiskSnapshot = () => {
+        const averageIncome = incomeSeries.reduce((sum, value) => sum + value, 0) / incomeSeries.length;
+        const minIncome = Math.min(...incomeSeries);
+        const maxIncome = Math.max(...incomeSeries);
+        const fluctuation = Number(calculateFluctuation(incomeSeries).toFixed(1));
+        const reserveFactor = Math.max(0, 260 - reserveBalance) / 5;
+        const completionFactor = invoiceCompleted ? -8 : 6;
+        const healthFactor = Math.max(0, 92 - socialHealth) * 1.2;
+        const probability = Math.max(8, Math.min(89, Math.round(fluctuation * 1.35 + reserveFactor + completionFactor + healthFactor)));
+        const level = probability >= 60 ? '高' : probability >= 35 ? '中' : '低';
 
-        if (question.includes('断缴')) {
-          return '建议优先确认待办结算并预留社保储备金，同时开启提醒，避免保障中断。';
-        }
+        return {
+          averageIncome,
+          minIncome,
+          maxIncome,
+          fluctuation,
+          probability,
+          level,
+        };
+      };
 
-        return '您可以继续咨询发票确认、领薪到账、报酬结算或社保储备相关问题。';
+      const renderIncomeBars = () => {
+        const maxValue = Math.max(...incomeSeries);
+        els.incomeBars.innerHTML = incomeSeries
+          .map((value, index) => {
+            const height = Math.max(18, Math.round((value / maxValue) * 100));
+            return `
+              <div class="bar-item">
+                <div class="bar-track">
+                  <div class="bar-fill" style="height: ${height}%;"></div>
+                </div>
+                <span>${incomeLabels[index]}</span>
+                <strong>${formatCurrency(value)}</strong>
+              </div>
+            `;
+          })
+          .join('');
+      };
+
+      const renderProcess = () => {
+        els.processStepper.innerHTML = stepLabels
+          .map((label, index) => {
+            const stepIndex = index + 1;
+            const status = workflowStep > stepIndex ? 'done' : workflowStep === stepIndex ? 'active' : 'pending';
+            return `
+              <article class="step-item ${status}">
+                <div class="step-index">${stepIndex}</div>
+                <strong>${label}</strong>
+                <p>${stepDescriptions[index]}</p>
+              </article>
+            `;
+          })
+          .join('');
+
+        const currentLabel = stepLabels[Math.max(0, workflowStep - 1)] || stepLabels[0];
+        const currentDesc = stepDescriptions[Math.max(0, workflowStep - 1)] || stepDescriptions[0];
+        els.dashboardStepHint.textContent = `当前步骤：${currentLabel}`;
+        els.sidebarStepText.textContent = currentLabel;
+        els.sidebarStepDesc.textContent = currentDesc;
       };
 
       const showToast = (message) => {
@@ -349,7 +1478,7 @@
         window.clearTimeout(toastTimer);
         toastTimer = window.setTimeout(() => {
           els.floatingToast.classList.add('is-hidden');
-        }, 3600);
+        }, 3200);
       };
 
       const openGovModal = () => {
@@ -361,30 +1490,162 @@
       };
 
       const renderDashboard = () => {
-        const balanceText = formatCurrency(reserveBalance);
-        els.reserveBalanceBanner.textContent = balanceText;
-        els.reserveBalanceStat.textContent = balanceText;
-        els.socialHealthStat.textContent = String(socialHealth);
-        els.socialHealthScore.textContent = String(socialHealth);
+        const snapshot = getRiskSnapshot();
+        const reserveAmount = Number((invoiceTask.amount * TAX_RATE).toFixed(2));
+
+        syncAnimatedValue('reserveBalance', reserveBalance, formatCurrency, [
+          els.reserveBalanceBanner,
+          els.reserveBalanceStat,
+          els.riskBalance,
+        ]);
+        syncAnimatedValue('socialSecurityTotal', socialSecurityTotal, formatCurrency, [els.headerSocialAmount]);
+        syncAnimatedValue('socialHealth', socialHealth, formatInteger, [els.socialHealthStat, els.socialHealthScore]);
+        syncAnimatedValue('riskProbability', snapshot.probability, formatPercent, [
+          els.headerRiskProbability,
+          els.dashboardRiskProbability,
+          els.riskProbability,
+        ]);
+
+        els.reserveDepositValue.textContent = formatCurrency(reserveAmount);
+        els.healthPill.textContent = `风险等级：${snapshot.level}`;
+        els.riskLevelTag.textContent = snapshot.level;
+        els.riskLevelText.textContent = snapshot.level;
+        els.incomeFluctuation.textContent = `${snapshot.fluctuation}%`;
+        els.incomeFluctuationSummary.textContent = `${snapshot.fluctuation}%`;
+        els.averageIncome.textContent = formatCurrency(snapshot.averageIncome);
+        els.incomeRange.textContent = `${formatCurrency(snapshot.minIncome)} - ${formatCurrency(snapshot.maxIncome)}`;
         els.healthProgressBar.style.width = `${socialHealth}%`;
+        els.healthDescription.innerHTML = `当前账户余额 <strong>${formatCurrency(reserveBalance)}</strong>，收入波动 <strong>${snapshot.fluctuation}%</strong>，断缴概率预测 <strong>${snapshot.probability}%</strong>。`;
+        els.riskGauge.style.setProperty('--progress', String(snapshot.probability));
 
         if (invoiceCompleted) {
-          els.settlementBadge.textContent = '已完成';
-          els.invoiceInsuranceBtn.textContent = '已完成开票并预扣社保';
+          els.settlementBadge.textContent = '已确认';
+          els.settlementBadgeMirror.textContent = '已确认';
+          els.settlementNote.textContent = '本笔劳务结算已确认，顶部社保总金额与账户余额已同步更新。';
+          els.invoiceInsuranceBtn.textContent = '已完成扣保';
           els.invoiceInsuranceBtn.disabled = true;
           els.settlementCard.classList.add('is-completed');
-          els.healthPill.textContent = '保障已增强';
-          els.settlementNote.textContent = '发票开具成功，数电发票与社保储备金已同步处理完成。';
-          els.healthDescription.innerHTML = `当前账户余额 <strong>${balanceText}</strong>，可用于微额社保代扣。本次开票已同步补足 20 元社保储备金。`;
         } else {
           els.settlementBadge.textContent = '待确认';
-          els.invoiceInsuranceBtn.textContent = '确认开票并预扣社保';
+          els.settlementBadgeMirror.textContent = '待确认';
+          els.settlementNote.textContent = '点击“确认并扣保”后，顶部社保总金额与账户余额会实时更新。';
+          els.invoiceInsuranceBtn.textContent = '确认并扣保';
           els.invoiceInsuranceBtn.disabled = false;
           els.settlementCard.classList.remove('is-completed');
-          els.healthPill.textContent = '待补充储备金';
-          els.settlementNote.textContent = '完成确认后，首页社保健康度与账户余额将自动实时更新。';
-          els.healthDescription.innerHTML = `当前账户余额 <strong>${balanceText}</strong>，可用于微额社保代扣。完成待办结算后会自动增加对应储备金。`;
         }
+
+        renderProcess();
+      };
+
+      const buildPlan = () => {
+        const snapshot = getRiskSnapshot();
+        const reserveTarget = Math.max(150, Math.round(snapshot.averageIncome * 0.03 / 10) * 10);
+        const lines = [];
+
+        if (snapshot.level === '高') {
+          lines.push('建议先保证当月连续缴费，再根据收入回款调整缴费档位。');
+          lines.push('建议预留 2 个月缴费缓冲，避免收入低谷时出现断缴。');
+        } else if (snapshot.level === '中') {
+          lines.push('建议采用月度固定缴费，减少收入波动带来的影响。');
+          lines.push('建议把结算款中的部分余额转入参保缓冲。');
+        } else {
+          lines.push('当前风险较低，可保持现有缴费频率。');
+          lines.push('建议继续保留基础缓冲，避免单月收入异常影响参保。');
+        }
+
+        lines.push(`建议缓冲金额：${formatCurrency(reserveTarget)}。`);
+        lines.push(`建议先完成 ${invoiceTask.companyName} 的 ${formatCurrency(invoiceTask.amount)} 劳务结算确认。`);
+
+        return {
+          title: `风险等级：${snapshot.level}`,
+          lines,
+        };
+      };
+
+      const generatePersonalPlan = () => {
+        const plan = buildPlan();
+        els.planResult.classList.remove('empty');
+        els.planResult.innerHTML = `
+          <span class="plan-timestamp">已生成个性化参保方案</span>
+          <div class="plan-title">${plan.title}</div>
+          <ul>
+            ${plan.lines.map((line) => `<li>${line}</li>`).join('')}
+          </ul>
+        `;
+        showToast('个性化参保方案已生成');
+      };
+
+      async function AI_Consultant(question) {
+        const cleanQuestion = String(question || '').trim();
+        const snapshot = getRiskSnapshot();
+
+        if (!cleanQuestion) {
+          return '请输入问题。';
+        }
+
+        if (cleanQuestion.includes('开票')) {
+          return `当前待确认劳务结算来自${invoiceTask.companyName}，金额 ${formatCurrency(invoiceTask.amount)}。确认后按 ${(TAX_RATE * 100).toFixed(0)}% 计入社保总金额和账户余额。`;
+        }
+
+        if (cleanQuestion.includes('断缴')) {
+          return `当前收入波动为 ${snapshot.fluctuation}% ，断缴概率预测为 ${snapshot.probability}% 。建议先确认待结算款，并保留至少 ${formatCurrency(Math.max(150, Math.round(snapshot.averageIncome * 0.03 / 10) * 10))} 的缓冲金额。`;
+        }
+
+        if (cleanQuestion.includes('方案')) {
+          const plan = buildPlan();
+          return `${plan.title}。${plan.lines.join(' ')}`;
+        }
+
+        if (cleanQuestion.includes('劳务') || cleanQuestion.includes('结算')) {
+          return `在[劳务结算中心]中点击“确认并扣保”，系统会将 ${formatCurrency(invoiceTask.amount * TAX_RATE)} 计入社保总金额，并同步更新账户余额。`;
+        }
+
+        if (cleanQuestion.includes('资格')) {
+          return '流程顺序为：资格校验 -> 方案选择 -> 缴费确认 -> 待遇生效。当前页面已恢复完整步骤引导。';
+        }
+
+        return `${aiPolicyReply} 当前风险等级：${snapshot.level}，断缴概率预测 ${snapshot.probability}%。`;
+      }
+
+      const getAIReply = (question) => AI_Consultant(question);
+
+      const submitAIQuestion = async (question) => {
+        const cleanQuestion = String(question || '').trim();
+        if (!cleanQuestion) {
+          return;
+        }
+
+        appendMessage('user', cleanQuestion);
+        els.aiSendBtn.disabled = true;
+        const pendingMessage = appendMessage('assistant', '处理中...');
+        const reply = await getAIReply(cleanQuestion);
+        pendingMessage.textContent = reply;
+        els.aiSendBtn.disabled = false;
+      };
+
+      const switchView = (view) => {
+        const titleMap = {
+          dashboard: '[数据看板]',
+          risk: '[参保风险预警]',
+          settlement: '[劳务结算中心]',
+          ai: '[AI 政策顾问]',
+        };
+
+        els.views.forEach((section) => {
+          section.classList.toggle('active', section.dataset.view === view);
+        });
+
+        els.navButtons.forEach((button) => {
+          button.classList.toggle('active', button.dataset.viewTarget === view);
+        });
+
+        els.viewTitle.textContent = titleMap[view] || '[数据看板]';
+      };
+
+      const toggleAIPanel = () => {
+        const collapsed = els.aiFloatingPanel.classList.toggle('collapsed');
+        els.toggleAiText.textContent = collapsed ? '展开' : '收起';
+        els.toggleAiPanel.setAttribute('aria-expanded', String(!collapsed));
       };
 
       const handleInvoiceAndInsurance = (confirmed = false) => {
@@ -399,22 +1660,15 @@
 
         const reserveAmount = Number((invoiceTask.amount * TAX_RATE).toFixed(2));
         reserveBalance = Number((reserveBalance + reserveAmount).toFixed(2));
+        socialSecurityTotal = Number((socialSecurityTotal + reserveAmount).toFixed(2));
         socialHealth = Math.min(socialHealth + 3, 100);
         invoiceCompleted = true;
+        workflowStep = 4;
 
         closeGovModal();
         renderDashboard();
-        appendMessage('assistant', `已完成 ${invoiceTask.companyName} 劳务报酬代开确认，${formatCurrency(reserveAmount)} 社保储备金已到账。`);
-        showToast('发票开具成功！已同步为您存入 20 元社保储备金，保障不掉线。');
-      };
-
-      const submitAIQuestion = (question) => {
-        const cleanQuestion = String(question || '').trim();
-        if (!cleanQuestion) {
-          return;
-        }
-        appendMessage('user', cleanQuestion);
-        appendMessage('assistant', getAIReply(cleanQuestion));
+        appendMessage('assistant', `已确认 ${invoiceTask.companyName} 的劳务结算，${formatCurrency(reserveAmount)} 已计入社保总金额。`);
+        showToast('劳务结算已确认，顶部金额已同步更新');
       };
 
       els.invoiceInsuranceBtn.addEventListener('click', () => handleInvoiceAndInsurance(false));
@@ -426,15 +1680,14 @@
         }
       });
 
+      els.generatePlanBtn.addEventListener('click', generatePersonalPlan);
       els.quickChips.forEach((button) => {
         button.addEventListener('click', () => submitAIQuestion(button.dataset.question || ''));
       });
-
       els.aiSendBtn.addEventListener('click', () => {
         submitAIQuestion(els.aiInput.value);
         els.aiInput.value = '';
       });
-
       els.aiInput.addEventListener('keydown', (event) => {
         if (event.key === 'Enter') {
           event.preventDefault();
@@ -442,9 +1695,17 @@
           els.aiInput.value = '';
         }
       });
+      els.navButtons.forEach((button) => {
+        button.addEventListener('click', () => switchView(button.dataset.viewTarget || 'dashboard'));
+      });
+      els.toggleAiPanel.addEventListener('click', toggleAIPanel);
 
-      appendMessage('assistant', '您好，我是灵工保 AI 顾问，可为您解答开票、领薪、报酬与缴保联动问题。');
+      renderIncomeBars();
+      appendMessage('assistant', '已连接 AI_Consultant。可直接提问：如何开票？断缴了怎么办？');
       renderDashboard();
+      switchView('dashboard');
+
+      window.AI_Consultant = AI_Consultant;
       window.handleInvoiceAndInsurance = handleInvoiceAndInsurance;
     })();
   </script>
